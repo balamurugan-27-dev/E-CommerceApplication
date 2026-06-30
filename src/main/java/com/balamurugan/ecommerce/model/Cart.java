@@ -18,10 +18,38 @@ public class Cart {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	
 	@OneToOne
 	@JoinColumn(name="User_id")
 	private Users user;
 	
 	@OneToMany(mappedBy = "cart")
 	private List<CartItem>cartItem;
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	public List<CartItem> getCartItem() {
+		return cartItem;
+	}
+
+	public void setCartItem(List<CartItem> cartItem) {
+		this.cartItem = cartItem;
+	}
+
+;
 }
