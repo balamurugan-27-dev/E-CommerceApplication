@@ -52,7 +52,7 @@ public class ProductController {
 	}
 
 	
-	@PostMapping("/order")
+	@PostMapping("/order") // place order 
 	public Order order(Authentication authentication) {
 		
 		return productService.order(authentication);
