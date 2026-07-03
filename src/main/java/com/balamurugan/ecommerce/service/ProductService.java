@@ -56,7 +56,7 @@ public class ProductService {
 	
 	public void addToCart(int id,int quantity,Authentication authentication) {
 		String mail=authentication.getName();
-		Users user=userRepo.findByEmail(mail);
+		Users user=userRepo.findByEmail(mail).get();
 		int userId=user.getId();
 		Cart cart=cartRepo.findByUserId(userId);
 		
@@ -82,7 +82,7 @@ public class ProductService {
 	public List<CartItem> getcart(Authentication authentication ){
 		
 		String mail=authentication.getName();
-		Users user= userRepo.findByEmail(mail);
+		Users user= userRepo.findByEmail(mail).get();
 		int id=user.getId();
 		
 		Cart cart=cartRepo.findByUserId(id);
@@ -93,7 +93,7 @@ public class ProductService {
 	public Order order(Authentication authentication) {
 		
 		String mail=authentication.getName();
-		Users user= userRepo.findByEmail(mail);
+		Users user= userRepo.findByEmail(mail).get();
 		
 		int id=user.getId();
 		

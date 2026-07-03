@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.balamurugan.ecommerce.Exceptions.ResourceNotFoundException;
 import com.balamurugan.ecommerce.dto.AuthResponse;
+import com.balamurugan.ecommerce.jwt.JwtUtil;
 import com.balamurugan.ecommerce.model.Roles;
 import com.balamurugan.ecommerce.model.Users;
 import com.balamurugan.ecommerce.repository.RolesRepo;
@@ -18,7 +19,13 @@ public class AuthService {
 	UserRepo userRepo;
 	@Autowired
 	RolesRepo rolesRepo;
+	
+	@Autowired
+	JwtUtil jwtUtil;
+	
 	PasswordEncoder encoder=new BCryptPasswordEncoder(12);
+	
+	
 	public void signup(AuthResponse authResponse) {
 		
 		Users user=new Users();
@@ -31,6 +38,11 @@ public class AuthService {
 		user.setRole(role);
 		
 		userRepo.save(user);
+	}
+	
+	public String login(String Token) {
+		return jwtUtil.generateToken(Token);
+		
 	}
 	
 }
