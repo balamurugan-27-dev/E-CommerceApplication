@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.balamurugan.ecommerce.Exceptions.ResourceNotFoundException;
 import com.balamurugan.ecommerce.model.Cart;
 import com.balamurugan.ecommerce.model.CartItem;
 import com.balamurugan.ecommerce.model.Order;
@@ -56,9 +57,9 @@ public class ProductService {
 	
 	public void addToCart(int id,int quantity,Authentication authentication) {
 		String mail=authentication.getName();
-		Users user=userRepo.findByEmail(mail).get();
+		Users user=userRepo.findByEmail(mail).orElseThrow(()-> new ResourceNotFoundException(mail + "  your mail not register"));
 		int userId=user.getId();
-		Cart cart=cartRepo.findByUserId(userId);
+		Cart cart=cartRepo.findByUserId(userId).orElseThrow(()->new ResourceNotFoundException("user id "+userId + " not found"));
 		
 		if(cart==null) {
 			cart=new Cart();
@@ -66,7 +67,7 @@ public class ProductService {
 			cart=cartRepo.save(cart);
 		}
 		
-		Products product=productsRepo.findById(id).get();
+		Products product=productsRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Your Product Id " + id + " Not found"));
 		
 		CartItem cartItem=new CartItem();
 		
@@ -85,7 +86,7 @@ public class ProductService {
 		Users user= userRepo.findByEmail(mail).get();
 		int id=user.getId();
 		
-		Cart cart=cartRepo.findByUserId(id);
+		Cart cart=cartRepo.findByUserId(id).orElseThrow(()-> new ResourceNotFoundException("Your Cart Not found"));
 		
 		return  cart.getCartItem();		
 	}
@@ -100,7 +101,7 @@ public class ProductService {
 		Order order =new Order();
 		double total=0;
 		
-		Cart cart=cartRepo.findByUserId(id);
+		Cart cart=cartRepo.findByUserId(id).orElseThrow(()-> new ResourceNotFoundException("Your Cart Not found"));
 		List<OrderItem> orderList=new ArrayList<>();
 		
 		
@@ -124,10 +125,18 @@ public class ProductService {
 		order.setTotal(total);
 		order.setUser(user);
 		
-		return orderRepo.save(order);
+		
+		Order final_order=orderRepo.save(order);
+		cartItemRepo.deleteAll();
+		return final_order;
 		
 		
 		
+	}
+
+
+	public Products GetProductById(int id) {
+		return productsRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Your Product ID :" +id +" Not found"));
 	}
 	
 	

@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.balamurugan.ecommerce.Exceptions.AccessDeniedhandler;
+import com.balamurugan.ecommerce.Exceptions.JwtAuthenticationEntryPoint;
 import com.balamurugan.ecommerce.jwt.JwtFilter;
 import com.balamurugan.ecommerce.service.CustomerDetailsService;
 
@@ -26,14 +28,19 @@ public class SecurityConfiguration {
 	JwtFilter jwtFilter;
 	
 	@Bean
-	public SecurityFilterChain securityFilter(HttpSecurity request) {
+	public SecurityFilterChain securityFilter(HttpSecurity request,JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,AccessDeniedhandler accessDeniedhandler) {
 		
 		return request.csrf(csrf-> csrf.disable())
 		.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		.authorizeHttpRequests(response->response
 				.requestMatchers("/auth/login").permitAll()
+				.requestMatchers("/product/addproduct","/product/deleteproduct").hasAnyRole("SELLER","ADMIN")
+				.requestMatchers("/user/**").hasRole("USER")
+				.requestMatchers("/role/**").hasRole("ADMIN")
+				.requestMatchers("/error/**").permitAll()
 				.anyRequest().authenticated())
 		.addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class)
+		.exceptionHandling((e)->e.authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedHandler(accessDeniedhandler))
 		.build();
 
 		

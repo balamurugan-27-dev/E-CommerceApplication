@@ -32,7 +32,7 @@ public class AuthService {
 		user.setEmail(authResponse.getEmail());
 		user.setPassword(encoder.encode(authResponse.getPassword()));
 		user.setName(authResponse.getName());
-		Roles role=rolesRepo.findByRole(authResponse.getRole()).orElseThrow(()-> new ResourceNotFoundException("Role Not Found"));
+		Roles role=rolesRepo.findByRole(authResponse.getRole()).orElseThrow(()->  new ResourceNotFoundException("Role Not Found"));
 		
 		
 		user.setRole(role);
