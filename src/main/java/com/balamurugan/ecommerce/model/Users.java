@@ -2,6 +2,8 @@ package com.balamurugan.ecommerce.model;
 
 
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +22,7 @@ public class Users {
 	private String name;
 	private String password;
 	@Email
+	@UniqueElements
 	private String email;
 	
 	@ManyToOne()

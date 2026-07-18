@@ -30,7 +30,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestBody AuthResponse response) {
+	public String login(@RequestBody AuthResponse response) {								
 
 		System.out.println("before");
 		System.out.println(response.getEmail());
