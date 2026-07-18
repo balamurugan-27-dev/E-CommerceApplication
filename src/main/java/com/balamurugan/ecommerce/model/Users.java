@@ -2,6 +2,7 @@ package com.balamurugan.ecommerce.model;
 
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,13 +19,18 @@ public class Users {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String password;
 	@Email
 	@NotBlank
+	@Column(unique = true)
 	private String email;
 	
+	
 	@ManyToOne()
+	@NotBlank
 	@JoinColumn(name = "role_id")
 	private Roles role;
 

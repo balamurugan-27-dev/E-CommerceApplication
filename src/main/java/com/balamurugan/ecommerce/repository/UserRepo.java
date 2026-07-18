@@ -11,5 +11,5 @@ import com.balamurugan.ecommerce.model.Users;
 public interface UserRepo extends JpaRepository<Users, Integer> {
 	
 	Optional<Users> findByEmail(String email);
-	//List<Users> findByRoleRole(String name);
+	boolean existsByEmail(String email);
 }

@@ -1,5 +1,7 @@
 package com.balamurugan.ecommerce.service;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +31,10 @@ public class AuthService {
 	public void signup(AuthResponse authResponse) {
 		
 		Users user=new Users();
+		
+		if(userRepo.existsByEmail(authResponse.getEmail())) {
+			throw new RuntimeException("this mail is already registerd");
+		}
 		user.setEmail(authResponse.getEmail());
 		user.setPassword(encoder.encode(authResponse.getPassword()));
 		user.setName(authResponse.getName());
