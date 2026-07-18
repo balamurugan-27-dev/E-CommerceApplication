@@ -22,6 +22,4 @@ public class GlopalException {
 				.body("bad request check passing aruguments");
 	}
 	
-
-	
 }
