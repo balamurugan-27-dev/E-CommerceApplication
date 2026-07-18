@@ -15,6 +15,8 @@ import com.balamurugan.ecommerce.model.Users;
 import com.balamurugan.ecommerce.repository.RolesRepo;
 import com.balamurugan.ecommerce.repository.UserRepo;
 
+import jakarta.validation.ConstraintViolationException;
+
 @Service
 public class AuthService {
 	@Autowired
@@ -33,7 +35,7 @@ public class AuthService {
 		Users user=new Users();
 		
 		if(userRepo.existsByEmail(authResponse.getEmail())) {
-			throw new RuntimeException("this mail is already registerd");
+			throw new ConstraintViolationException(null);
 		}
 		user.setEmail(authResponse.getEmail());
 		user.setPassword(encoder.encode(authResponse.getPassword()));

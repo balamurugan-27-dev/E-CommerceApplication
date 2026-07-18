@@ -1,5 +1,7 @@
 package com.balamurugan.ecommerce.Exceptions;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,8 +26,8 @@ public class GlopalException {
 				.body("bad request check passing aruguments");
 	}
 	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<T>validationException(ConstraintViolationException e){
-		return new ResponseEntity<T>("the mail is already registered");
+	public ResponseEntity<String>validationException(ConstraintViolationException e){
+		return new ResponseEntity<String>("the mail is already registered",HttpStatus.BAD_REQUEST);
 	}
 	
 }
