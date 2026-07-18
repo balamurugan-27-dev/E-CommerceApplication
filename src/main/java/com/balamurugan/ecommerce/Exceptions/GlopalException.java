@@ -5,6 +5,8 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import jakarta.validation.ConstraintViolationException;
+
 @ControllerAdvice
 public class GlopalException {
 	
@@ -20,6 +22,10 @@ public class GlopalException {
 		
 		return ResponseEntity.status(400)
 				.body("bad request check passing aruguments");
+	}
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<T>validationException(ConstraintViolationException e){
+		return new ResponseEntity<T>("the mail is already registered");
 	}
 	
 }
