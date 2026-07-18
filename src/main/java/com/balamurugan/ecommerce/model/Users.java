@@ -2,8 +2,6 @@ package com.balamurugan.ecommerce.model;
 
 
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Users {
@@ -22,7 +21,7 @@ public class Users {
 	private String name;
 	private String password;
 	@Email
-	@UniqueElements
+	@NotBlank
 	private String email;
 	
 	@ManyToOne()
