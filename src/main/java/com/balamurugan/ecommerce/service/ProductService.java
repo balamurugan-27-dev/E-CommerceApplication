@@ -137,9 +137,13 @@ public class ProductService {
 	public List<OrderItem> getOrderItems(Authentication auth){
 		
 		int  userId=userRepo.findByEmail(auth.getName()).get().getId();
-		Order order =orderRepo.findByUserId(userId).get();
+		List<Order> order =orderRepo.findAllByUserId(userId);
 		
-		return order.getOrderItem();
+		List<List<OrderItem>> items=new ArrayList<>();
+		
+		for(Order o : order) {
+			items.add(o.getOrderItem());
+		}
 		
 		
 		
