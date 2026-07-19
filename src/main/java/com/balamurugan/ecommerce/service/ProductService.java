@@ -59,7 +59,7 @@ public class ProductService {
 		String mail=authentication.getName();
 		Users user=userRepo.findByEmail(mail).orElseThrow(()-> new ResourceNotFoundException(mail + "  your mail not register"));
 		int userId=user.getId();
-		Cart cart=cartRepo.findByUserId(userId).get();	
+		Cart cart=cartRepo.findByUserId(userId).orElse(null);	
 		
 		if(cart==null) {
 			cart=new Cart();
