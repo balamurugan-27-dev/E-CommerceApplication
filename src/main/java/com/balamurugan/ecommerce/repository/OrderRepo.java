@@ -1,5 +1,6 @@
 package com.balamurugan.ecommerce.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,7 @@ import com.balamurugan.ecommerce.model.Order;
 public interface OrderRepo extends JpaRepository<Order, Integer> {
 	
 	Optional<Order> findByUserId (int id);
+
+	List<Order> findAllByUserId(int userId);
 
 }

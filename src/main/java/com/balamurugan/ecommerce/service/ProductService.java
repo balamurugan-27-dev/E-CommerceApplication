@@ -149,6 +149,12 @@ public class ProductService {
 	public Products GetProductById(int id) {
 		return productsRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Your Product ID :" +id +" Not found"));
 	}
+
+
+	public List<Order> getOrders(Authentication auth) {
+		int userId =userRepo.findByEmail(auth.getName()).get().getId();
+		return orderRepo.findAllByUserId(userId);
+	}
 	
 	
 	
