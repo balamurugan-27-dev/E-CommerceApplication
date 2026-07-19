@@ -61,7 +61,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/getorderitems") // To get user ordered  items
-	public List<OrderItem> getOrderItems(Authentication auth){
+	public List<List<OrderItem>> getOrderItems(Authentication auth){
 		return productService.getOrderItems(auth);
 	}
 	

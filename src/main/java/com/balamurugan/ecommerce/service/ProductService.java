@@ -134,7 +134,7 @@ public class ProductService {
 		
 	}
 	
-	public List<OrderItem> getOrderItems(Authentication auth){
+	public List<List<OrderItem>> getOrderItems(Authentication auth){
 		
 		int  userId=userRepo.findByEmail(auth.getName()).get().getId();
 		List<Order> order =orderRepo.findAllByUserId(userId);
@@ -145,6 +145,7 @@ public class ProductService {
 			items.add(o.getOrderItem());
 		}
 		
+		return items;
 		
 		
 	}
