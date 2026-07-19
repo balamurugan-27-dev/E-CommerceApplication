@@ -9,5 +9,4 @@ import com.balamurugan.ecommerce.model.OrderItem;
 public interface OrderItemRepo extends JpaRepository<OrderItem, Integer> {
 	
 	
-	
 }

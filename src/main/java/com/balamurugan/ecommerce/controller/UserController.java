@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.balamurugan.ecommerce.model.CartItem;
 import com.balamurugan.ecommerce.model.Order;
+import com.balamurugan.ecommerce.model.OrderItem;
 import com.balamurugan.ecommerce.model.Products;
 import com.balamurugan.ecommerce.service.ProductService;
 
@@ -53,6 +54,11 @@ public class UserController {
 	public Order order(Authentication authentication) {
 		
 		return productService.order(authentication);
+	}
+	
+	@GetMapping("/getorderitems") // To get user ordered  items
+	public List<OrderItem> getOrderItems(Authentication auth){
+		return productService.getOrderItems(auth);
 	}
 	
 }

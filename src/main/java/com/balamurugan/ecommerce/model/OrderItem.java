@@ -1,5 +1,7 @@
 package com.balamurugan.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,7 @@ public class OrderItem {
 	private Products products;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Order order;
 
 	public int getId() {

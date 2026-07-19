@@ -38,7 +38,7 @@ public class ProductService {
 	OrderRepo orderRepo;
 	
 	@Autowired
-	OrderItemRepo orederItemRepo;
+	OrderItemRepo orderItemRepo;
 	
 	public List<Products> getProducts(){
 		return productsRepo.findAll();
@@ -129,6 +129,17 @@ public class ProductService {
 		Order final_order=orderRepo.save(order);
 		cartItemRepo.deleteAll();
 		return final_order;
+		
+		
+		
+	}
+	
+	public List<OrderItem> getOrderItems(Authentication auth){
+		
+		int  userId=userRepo.findByEmail(auth.getName()).get().getId();
+		Order order =orderRepo.findByUserId(userId).get();
+		
+		return order.getOrderItem();
 		
 		
 		
